@@ -28,7 +28,7 @@ public class MatchController {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<List<Job>> getFirstThree(@PathVariable int id) {
+    public ResponseEntity<List<Job>> matches(@PathVariable int id) {
 
         //resource indicated by id doesn't exist.
         ResponseEntity<List<Job>> response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);

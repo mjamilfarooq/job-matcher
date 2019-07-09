@@ -92,7 +92,7 @@ public class TopNMatches implements IMatchingService {
                 values().
                 stream().
                 limit(numberOfMatches).
-                flatMap( s-> s.stream()).
+                flatMap( Set<Job>::stream ).
                 limit(numberOfMatches).
                 collect(Collectors.toList());
     }
