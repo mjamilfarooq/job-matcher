@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -20,34 +19,37 @@ public class TopNMatches implements IMatchingService {
     @Value("${matcher.number-of-matches}")
     int numberOfMatches;
 
+
+    private final IJobDataService jobDataService;
+
     @Autowired
-    IJobDataService jobDataService;
+    TopNMatches(IJobDataService jobDataService) {
+        this.jobDataService = jobDataService;
+    }
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    Long rankCertifications(Job job, Worker worker) {
-        var rank = worker.getCertificates().
+    private Long rankCertifications(Job job, Worker worker) {
+        return worker.getCertificates().
                 stream().
                 filter(job.getRequiredCertificates()::contains).
                 count();
-
-        return rank;
     }
 
     class JobsInDecreasingOrderOfSalary extends TreeSet<Job> {
-        public JobsInDecreasingOrderOfSalary() {
+        JobsInDecreasingOrderOfSalary() {
             super(Comparator.comparing(Job::getBillRate, Comparator.reverseOrder()));
         }
     }
 
     class ReverseSortedTreeMap<K, V> extends TreeMap<K, V> {
-        public ReverseSortedTreeMap() {
+        ReverseSortedTreeMap() {
             super(Collections.reverseOrder());
         }
     }
 
     class JobWithinReach implements Predicate<Job> {
-        Worker worker;
+        final Worker worker;
         JobWithinReach(Worker worker) {
             this.worker = worker;
         }

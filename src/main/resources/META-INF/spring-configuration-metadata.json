@@ -1,0 +1,16 @@
+{
+  "properties": [
+    {
+      "name": "matcher.number-of-matches",
+      "type": "int"
+    },
+    {
+      "name": "matcher.job-service",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "matcher.worker-service",
+      "type": "java.lang.String"
+    }
+  ]
+}

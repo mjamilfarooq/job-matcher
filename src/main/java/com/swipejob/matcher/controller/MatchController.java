@@ -19,13 +19,16 @@ import java.util.List;
 @RequestMapping("api/match")
 public class MatchController {
 
-    @Autowired
-    IWorkerDataService workerService;
+    private final IWorkerDataService workerService;
+    private final IMatchingService matchingService;
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    IMatchingService matchingService;
-
-    Logger logger = LoggerFactory.getLogger(this.getClass());
+    MatchController(IWorkerDataService workerService, IMatchingService matchingService) {
+        this.workerService = workerService;
+        this.matchingService = matchingService;
+    }
 
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<List<Job>> matches(@PathVariable int id) {

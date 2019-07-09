@@ -23,7 +23,7 @@ public class JobRestService implements IJobDataService {
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<Job>>(){});
-        var jobs = response.getBody();
-        return jobs;
+        return response.getBody();
+
     }
 }
